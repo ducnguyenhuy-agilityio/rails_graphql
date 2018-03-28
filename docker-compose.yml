@@ -1,0 +1,27 @@
+version: "3"
+services:
+  grapql:
+    build: .
+    # image: image_name:tag
+    # command: bundle exec rails s -p 5000 -b 0
+    links:
+      - postgres
+    ports:
+      - 5000:5000
+    volumes:
+      - ./:/home/app
+      - bundle:/bundle
+    stdin_open: true
+    tty: true
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: grapql
+      POSTGRES_PASSWORD: grapql
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+volumes:
+  pgdata:
+  bundle:
