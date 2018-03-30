@@ -24,13 +24,20 @@ class Mutations::BookRental < GraphQL::Function
 
     rental = Rental.find(args[:rental_id])
 
-    booking = rental.bookings.create!({
-      user: ctx[:current_user],
+    # booking = rental.bookings.create!({
+    #   user: ctx[:current_user],
+    #   start_date: args[:start_date],
+    #   stop_date: args[:stop_date],
+    #   guests: args[:guests]
+    # })
+    booking1 = BookRentalHandler.execute({
       start_date: args[:start_date],
       stop_date: args[:stop_date],
       guests: args[:guests]
-    })
+    }, ctx[:current_user].id)
 
-    booking
+    puts '@@@@', booking1.inspect
+
+    Booking.first
   end
 end
