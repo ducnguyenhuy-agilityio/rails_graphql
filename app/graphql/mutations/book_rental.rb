@@ -30,14 +30,12 @@ class Mutations::BookRental < GraphQL::Function
     #   stop_date: args[:stop_date],
     #   guests: args[:guests]
     # })
-    booking1 = BookRentalHandler.execute({
+    booking = BookRentalHandler.execute({
       start_date: args[:start_date],
       stop_date: args[:stop_date],
       guests: args[:guests]
     }, ctx[:current_user].id)
 
-    puts '@@@@', booking1.inspect
-
-    Booking.first
+    booking
   end
 end

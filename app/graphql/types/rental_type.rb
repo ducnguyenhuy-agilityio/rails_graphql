@@ -17,6 +17,8 @@ Types::RentalType = GraphQL::ObjectType.define do
   field :province, types.String
   field :country, !types.String
   field :postal_code, types.String
+  field :featured, types.Boolean
+  field :views_count, types.Int
 
   field :owner, Types::UserType do
     preload :user

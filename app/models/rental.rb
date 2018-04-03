@@ -34,4 +34,8 @@ class Rental < ApplicationRecord
 
   scope :by_created_at, ->(direction) { order created_at: direction }
   scope :by_updated_at, ->(direction) { order updated_at: direction }
+
+  def is_featured
+    featured == true
+  end
 end

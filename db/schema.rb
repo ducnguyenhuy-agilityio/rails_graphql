@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319082239) do
+ActiveRecord::Schema.define(version: 20180402084341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,9 @@ ActiveRecord::Schema.define(version: 20180319082239) do
     t.datetime "reviewed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0
     t.index ["rental_id"], name: "index_bookings_on_rental_id"
+    t.index ["status"], name: "index_bookings_on_status"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
@@ -49,7 +51,11 @@ ActiveRecord::Schema.define(version: 20180319082239) do
     t.string "postal_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "featured", default: false
+    t.integer "views_count", default: 0
+    t.index ["featured"], name: "index_rentals_on_featured"
     t.index ["user_id"], name: "index_rentals_on_user_id"
+    t.index ["views_count"], name: "index_rentals_on_views_count"
   end
 
   create_table "users", force: :cascade do |t|

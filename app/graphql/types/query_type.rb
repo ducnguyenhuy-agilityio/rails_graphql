@@ -10,6 +10,15 @@ Types::QueryType = GraphQL::ObjectType.define do
     }
   end
 
+  field :featured_rentals, !types[Types::RentalType] do
+    argument :limit, types.Int, default_value: 20, prepare: -> (limit) { [limit, 30].min }
+    argument :sort_by, types.String
+    argument :direction, types.String, default_value: :asc
+    resolve ->(obj, args, ctx) {
+      FeaturedRentalsQuery.new(OrderedRentalsQuery.new({ sort_by: args[:sort_by], direction: args[:direction] }).all).all.limit(args[:limit])
+    }
+  end
+
   field :users, !types[Types::UserType] do
     description ""
     resolve ->(obj, args, ctx) {
