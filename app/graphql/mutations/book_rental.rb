@@ -3,11 +3,14 @@ class Mutations::BookRental < GraphQL::Function
   argument :start_date, !Types::DateTimeType
   argument :stop_date, !Types::DateTimeType
   argument :guests, !types.Int
+  argument :status, types.Int
 
   type Types::BookingType
 
   def call(obj, args, ctx)
-    Resolvers::RescueFrom.new(method(:book_rental)).call(obj, args, ctx)
+    # Resolvers::RescueFrom.new(method(:book_rental)).call(obj, args, ctx)
+
+    book_rental(obj, args, ctx)
   end
 
   private
@@ -22,7 +25,7 @@ class Mutations::BookRental < GraphQL::Function
       raise GraphQL::ExecutionError.new("Invalid token")
     end
 
-    rental = Rental.find(args[:rental_id])
+    # rental = Rental.find(args[:rental_id])
 
     # booking = rental.bookings.create!({
     #   user: ctx[:current_user],
@@ -31,9 +34,11 @@ class Mutations::BookRental < GraphQL::Function
     #   guests: args[:guests]
     # })
     booking = BookRentalHandler.execute({
+      rental_id: args[:rental_id],
       start_date: args[:start_date],
       stop_date: args[:stop_date],
-      guests: args[:guests]
+      guests: args[:guests],
+      status: args[:status]
     }, ctx[:current_user].id)
 
     booking

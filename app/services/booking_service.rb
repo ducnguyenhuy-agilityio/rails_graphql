@@ -1,10 +1,10 @@
 class BookingService
   class << self
     def create(booking_handler)
-      puts 'Creating booking record'
-      user = booking_handler.user
+      rental = booking_handler.rental
       booking_params = booking_handler.booking_params
-      user.bookings.create(booking_params)
+      booking_params[:user] = booking_handler.user
+      booking = rental.bookings.create!(booking_params)
     end
   end
 end

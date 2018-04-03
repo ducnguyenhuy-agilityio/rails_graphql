@@ -65,3 +65,4 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.11'
 # Preload ActiveRecord associations with graphql-batch (Avoiding N+1 Queries)
 gem 'graphql-preload', '~> 1.0', '>= 1.0.4'
 gem 'json_web_token', '~> 0.3.5'
+gem 'graphql-errors', '~> 0.2.0'

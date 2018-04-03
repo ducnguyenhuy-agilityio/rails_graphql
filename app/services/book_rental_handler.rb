@@ -9,12 +9,13 @@ class BookRentalHandler
   define_model_callbacks :initialize, only: [:after]
   define_model_callbacks :create_booking, only: [:after]
 
-  after_initialize :valid?
+  # after_initialize :valid?
   after_create_booking :create_invoice
   after_create_booking :notify_user
 
   def self.execute(params, user_id)
-    self.new(params, user_id).tap(&:create_booking)
+    instance = self.new(params, user_id)
+    instance.create_booking
   end
 
   def initialize(params, user_id)
@@ -32,15 +33,17 @@ class BookRentalHandler
   end
 
   def assign_rental
-    Rental.find_by(@booking_params[:rental_id])
+    Rental.find(@booking_params[:rental_id])
   end
 
   private
   def create_invoice
+    return unless @booking.present?
     InvoiceService.create(@booking)
   end
 
   def notify_user
+    return unless @booking.present?
     BookingNotifier.send(@booking)
   end
 end
