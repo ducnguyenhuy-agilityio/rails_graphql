@@ -9,8 +9,8 @@ class AuthToken
   end
 
   def self.verify(token)
-    result = JsonWebToken.verify(token, key: key) rescue -1 # (Duc updated this code) token is not correct format
-    return result if result == -1
+    result = JsonWebToken.verify(token, key: key) rescue nil # (Duc updated this code) token is not correct format
+    return result if result.nil?
     return nil if result[:error]
     User.find_by(id: result[:ok][:user_id])
   end

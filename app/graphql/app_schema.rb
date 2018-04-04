@@ -1,10 +1,16 @@
 AppSchema = GraphQL::Schema.define do
   use GraphQL::Batch
+  use GraphQL::Guard.new(
+    # Returns an error in the response
+    not_authorized: ->(type, field) { GraphQL::ExecutionError.new("Not authorized to access.") },
+    policy_object: GraphqlPolicy
+  )
 
   enable_preloading
 
   mutation(Types::MutationType)
   query(Types::QueryType)
+
 end
 
 GraphQL::Errors.configure(AppSchema) do
@@ -17,9 +23,12 @@ GraphQL::Errors.configure(AppSchema) do
   end
 
   rescue_from StandardError do |exception|
-    puts exception.message
-    GraphQL::ExecutionError.new("Please try to execute the query for this field later")
+    GraphQL::ExecutionError.new(exception.message)
   end
+
+  # rescue_from GraphQL::Guard::NotAuthorizedError do |exception|
+  #   GraphQL::ExecutionError.new("Error here")
+  # end
 
   # rescue_from CustomError do |exception, object, arguments, context|
   #   error = GraphQL::ExecutionError.new("Error found!")

@@ -89,6 +89,8 @@ GEM
       promise.rb (~> 0.7.2)
     graphql-errors (0.2.0)
       graphql (>= 1.6.0, < 2)
+    graphql-guard (1.0.0)
+      graphql (>= 1.6.0, < 2)
     graphql-preload (1.0.4)
       activerecord (>= 3.2, < 6)
       graphql (>= 1.5, < 2)
@@ -218,6 +220,7 @@ DEPENDENCIES
   graphiql-rails
   graphql (~> 1.7, >= 1.7.13)
   graphql-errors (~> 0.2.0)
+  graphql-guard (~> 1.0)
   graphql-preload (~> 1.0, >= 1.0.4)
   jbuilder (~> 2.5)
   json_web_token (~> 0.3.5)

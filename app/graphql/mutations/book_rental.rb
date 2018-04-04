@@ -17,13 +17,13 @@ class Mutations::BookRental < GraphQL::Function
 
   def book_rental(obj, args, ctx)
     # Raise exception if no user is present
-    if ctx[:current_user].blank?
-      raise GraphQL::ExecutionError.new("Authentication required")
-    end
+    # if ctx[:current_user].blank?
+    #   raise GraphQL::ExecutionError.new("Authentication required")
+    # end
 
-    if ctx[:current_user] == -1
-      raise GraphQL::ExecutionError.new("Invalid token")
-    end
+    # if ctx[:current_user] == -1
+    #   raise GraphQL::ExecutionError.new("Invalid token")
+    # end
 
     # rental = Rental.find(args[:rental_id])
 
