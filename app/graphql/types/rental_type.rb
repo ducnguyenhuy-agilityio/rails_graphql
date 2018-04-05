@@ -22,7 +22,7 @@ Types::RentalType = GraphQL::ObjectType.define do
 
   field :owner, Types::UserType do
     preload :user
-    resolve -> (obj, args, context) { obj.user }
+    resolve -> (obj, args, ctx) { obj.user if ctx[:current_user].blank? }
   end
   field :bookings, !types[Types::BookingType] do
     preload :bookings
