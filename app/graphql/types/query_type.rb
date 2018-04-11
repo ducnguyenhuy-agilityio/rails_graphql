@@ -3,7 +3,7 @@ Types::QueryType = GraphQL::ObjectType.define do
 
   field :rentals, !types[Types::RentalType] do
     description ""
-    argument :limit, types.Int, default_value: 20, prepare: -> (limit) { [limit, 30].min }
+    argument :limit, types.Int, default_value: 20, prepare: -> (limit, ctx) { [limit, 30].min }
     argument :sort_by, types.String
     argument :direction, types.String, default_value: :asc
     resolve ->(obj, args, ctx) {
@@ -12,7 +12,7 @@ Types::QueryType = GraphQL::ObjectType.define do
   end
 
   field :featured_rentals, !types[Types::RentalType] do
-    argument :limit, types.Int, default_value: 20, prepare: -> (limit) { [limit, 30].min }
+    argument :limit, types.Int, default_value: 20, prepare: -> (limit, ctx) { [limit, 30].min }
     argument :sort_by, types.String
     argument :direction, types.String, default_value: :asc
     # guard ->(obj, args, ctx) { !ctx[:current_user].blank? }
